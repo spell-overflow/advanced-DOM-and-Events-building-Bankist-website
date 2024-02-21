@@ -33,6 +33,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 // selecting, creating and deleting Elements
+
 // selecting elements
 console.log(document.documentElement); // select the entire document
 console.log(document.head);
@@ -72,3 +73,47 @@ document
     console.log('halo');
     message.remove();
   });
+
+// Styles
+
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%'; // set as inline styles
+
+console.log(message.style.height); // won't work
+console.log(message.style.backgroundColor); // -> rgb(55, 56, 61)
+console.log(getComputedStyle(message).color); // -> rgb(172, 167, 160)
+console.log(getComputedStyle(message).height); // -> 48.8889px
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// atributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt); // -> Bankist logo
+console.log(logo.src); // -> http://127.0.0.1:8080/img/logo.png it shows us the abolute URL of the element
+console.log(logo.className); // -> nav__logo
+
+logo.alt = 'Beautiful minimalist logo';
+
+// console.log(logo.designer); // doesn't work because it's not a standard property of pictures
+// but we can do this instead:
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src); // absolute URL
+console.log(logo.getAttribute('src')); // URL in the html folder
+
+const link = document.querySelector('.twitter-link');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data attributes
+console.log(logo.dataset.versionNumber); //Camelcase here even if HTML is with dashes
+
+// classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c');
