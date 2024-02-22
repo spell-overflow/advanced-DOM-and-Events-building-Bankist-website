@@ -32,7 +32,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// selecting, creating and deleting Elements
+/* selecting, creating and deleting Elements
 
 // selecting elements
 console.log(document.documentElement); // select the entire document
@@ -117,3 +117,33 @@ logo.classList.add('c', 'j');
 logo.classList.remove('c', 'j');
 logo.classList.toggle('c');
 logo.classList.contains('c');
+
+// Don't use!! because
+// logo.className = 'jonas'
+
+*/
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1cords = section1.getBoundingClientRect(); // shows us the coordinates of the element
+  console.log(s1cords);
+  console.log(e.target.getBoundingClientRect()); // shows us the coordinates of the btnScrollTo Element relatviv -> changes when we scroll
+  console.log('Currents scroll (X/Y)', window.scrollX, window.scrollY); // -> Currents scroll (X/Y) 0 603
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  ); // -> height/width viewport 906 886
+
+  // Scorlling
+  // window.scrollTo(s1cords.left, s1cords.top + window.scrollY); // top is relativ to the viewpoint not the page
+
+  window.scrollTo({
+    left: s1cords.left,
+    top: s1cords.top + window.scrollY,
+    behavior: 'smooth',
+  });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
