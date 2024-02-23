@@ -122,28 +122,46 @@ logo.classList.contains('c');
 // logo.className = 'jonas'
 
 */
+
+// Smooth scrolling:
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', function (e) {
   const s1cords = section1.getBoundingClientRect(); // shows us the coordinates of the element
-  console.log(s1cords);
-  console.log(e.target.getBoundingClientRect()); // shows us the coordinates of the btnScrollTo Element relatviv -> changes when we scroll
-  console.log('Currents scroll (X/Y)', window.scrollX, window.scrollY); // -> Currents scroll (X/Y) 0 603
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  ); // -> height/width viewport 906 886
+  // console.log(s1cords);
+  // console.log(e.target.getBoundingClientRect()); // shows us the coordinates of the btnScrollTo Element relatviv -> changes when we scroll
+  // console.log('Currents scroll (X/Y)', window.scrollX, window.scrollY); // -> Currents scroll (X/Y) 0 603
+  // console.log(
+  //   'height/width viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // ); // -> height/width viewport 906 886
 
   // Scorlling
   // window.scrollTo(s1cords.left, s1cords.top + window.scrollY); // top is relativ to the viewpoint not the page
 
-  window.scrollTo({
-    left: s1cords.left,
-    top: s1cords.top + window.scrollY,
-    behavior: 'smooth',
-  });
+  // window.scrollTo({
+  //   left: s1cords.left,
+  //   top: s1cords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
 
   section1.scrollIntoView({ behavior: 'smooth' });
 });
+
+// Types of Events and Event Handlers
+
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (e) {
+  alert('addEventListener: Great! You are reading the heading :D');
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (e) { // a bit oldscool
+//   alert('onmouseenter: Great! You are reading the heading :D');
+// };
