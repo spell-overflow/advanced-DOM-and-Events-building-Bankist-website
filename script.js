@@ -93,7 +93,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 // Tabbed component
-
 tabsContainer.addEventListener('click', function (e) {
   const clicked = e.target.closest('.operations__tab');
   clicked.classList.add('operations__tab--active');
@@ -125,7 +124,7 @@ const handleHover = function (e) {
   }
 };
 
-/* refatored this a second time:
+/* refactored this a second time:
 nav.addEventListener('mouseover', function (e) {
   handleHover(e, 0.5);
 });
@@ -140,16 +139,50 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-// Sticky navigation
+/* Sticky navigation
 const initialCoords = section1.getBoundingClientRect();
 console.log(initialCoords);
+// solution with bad performance:
 window.addEventListener('scroll', function (e) {
   console.log(window.scrollY);
 
   if (this.window.scrollY > initialCoords.top) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
-});
+}); */
 
+// Sticky navigation: Intersection Observer API
+
+// const obsCallback = function (entries, observer) {
+//   // will be called everytime the observed element is intersecting  the root-element at the treshold we define
+//   entries.forEach(entry => {
+//     console.log(entry);
+//   });
+// };
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2], // percentage we want to have visible
+// // };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);
 // /* selecting, creating and deleting Elements
 
 // // selecting elements
