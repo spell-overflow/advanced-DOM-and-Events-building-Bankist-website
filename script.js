@@ -123,7 +123,6 @@ const handleHover = function (e) {
     logo.style.opacity = this;
   }
 };
-
 /* refactored this a second time:
 nav.addEventListener('mouseover', function (e) {
   handleHover(e, 0.5);
@@ -165,13 +164,11 @@ window.addEventListener('scroll', function (e) {
 
 // const observer = new IntersectionObserver(obsCallback, obsOptions);
 // observer.observe(section1);
-
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
 
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
 
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
@@ -183,6 +180,29 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   rootMargin: `-${navHeight}px`,
 });
 headerObserver.observe(header);
+
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, oberver) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  oberver.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
 // /* selecting, creating and deleting Elements
 
 // // selecting elements
