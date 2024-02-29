@@ -199,7 +199,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden'); // outcommented because effect on slider
 });
 
 // Lazy loading images (good for performance)
@@ -230,165 +230,171 @@ imgTargets.forEach(img => imgObserver.observe(img));
 // Slider
 const slides = document.querySelectorAll('.slide');
 
-// /* selecting, creating and deleting Elements
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(0.4) translateX(-800px)';
+slider.style.overflow = 'visible';
 
-// // selecting elements
-// console.log(document.documentElement); // select the entire document
-// console.log(document.head);
-// console.log(document.body);
+slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+// 0%, 100%, 200%, 300% as the img positions
 
-// const header = document.querySelector('.header');
-// const allSections = document.querySelectorAll('.section');
-// console.log(allSections);
+/* selecting, creating and deleting Elements
 
-// document.getElementById('section--1'); // creates a node-List
-// const allButtons = document.getElementsByTagName('button');
-// console.log(allButtons); // returns an HTML Collection, when the DOM is changed, it will immediatly change
+// selecting elements
+console.log(document.documentElement); // select the entire document
+console.log(document.head);
+console.log(document.body);
 
-// console.log(document.getElementsByClassName('btn'));
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+console.log(allSections);
 
-// // creating and inserting elements
+document.getElementById('section--1'); // creates a node-List
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons); // returns an HTML Collection, when the DOM is changed, it will immediatly change
 
-// const message = document.createElement('div'); // just an object that represents a DOM ELement
-// message.classList.add('cookie-message');
-// // message.textContent =
-// //   'We use cookies for improved functionality and analytics.';
-// message.innerHTML =
-//   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>'; // to read or set content
+console.log(document.getElementsByClassName('btn'));
 
-// header.prepend(message); // adds the element as the first child to the header
-// // header.append(message); // adds the element as the last child, when we use it here it moves the element as the last child
+// creating and inserting elements
 
-// // header.append(message.cloneNode(true)); // true: all the child elements will be copied too
-// header.append(message);
-// // header.before(message); // copies the element before it
-// // header.after(message); // copies the element
+const message = document.createElement('div'); // just an object that represents a DOM ELement
+message.classList.add('cookie-message');
+// message.textContent =
+//   'We use cookies for improved functionality and analytics.';
+message.innerHTML =
+  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!</button>'; // to read or set content
 
-// // Delete elements
-// document
-//   .querySelector('.btn--close-cookie')
-//   .addEventListener('click', function () {
-//     console.log('halo');
-//     message.remove();
-//   });
+header.prepend(message); // adds the element as the first child to the header
+// header.append(message); // adds the element as the last child, when we use it here it moves the element as the last child
 
-// // Styles
+// header.append(message.cloneNode(true)); // true: all the child elements will be copied too
+header.append(message);
+// header.before(message); // copies the element before it
+// header.after(message); // copies the element
 
-// message.style.backgroundColor = '#37383d';
-// message.style.width = '120%'; // set as inline styles
+// Delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    console.log('halo');
+    message.remove();
+  });
 
-// console.log(message.style.height); // won't work
-// console.log(message.style.backgroundColor); // -> rgb(55, 56, 61)
-// console.log(getComputedStyle(message).color); // -> rgb(172, 167, 160)
-// console.log(getComputedStyle(message).height); // -> 48.8889px
+// Styles
 
-// message.style.height =
-//   Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%'; // set as inline styles
 
-// document.documentElement.style.setProperty('--color-primary', 'orangered');
+console.log(message.style.height); // won't work
+console.log(message.style.backgroundColor); // -> rgb(55, 56, 61)
+console.log(getComputedStyle(message).color); // -> rgb(172, 167, 160)
+console.log(getComputedStyle(message).height); // -> 48.8889px
 
-// // atributes
-// const logo = document.querySelector('.nav__logo');
-// console.log(logo.alt); // -> Bankist logo
-// console.log(logo.src); // -> http://127.0.0.1:8080/img/logo.png it shows us the abolute URL of the element
-// console.log(logo.className); // -> nav__logo
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
 
-// logo.alt = 'Beautiful minimalist logo';
+document.documentElement.style.setProperty('--color-primary', 'orangered');
 
-// // console.log(logo.designer); // doesn't work because it's not a standard property of pictures
-// // but we can do this instead:
-// console.log(logo.getAttribute('designer'));
-// logo.setAttribute('company', 'Bankist');
+// atributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt); // -> Bankist logo
+console.log(logo.src); // -> http://127.0.0.1:8080/img/logo.png it shows us the abolute URL of the element
+console.log(logo.className); // -> nav__logo
 
-// console.log(logo.src); // absolute URL
-// console.log(logo.getAttribute('src')); // URL in the html folder
+logo.alt = 'Beautiful minimalist logo';
 
-// const link = document.querySelector('.twitter-link');
-// console.log(link.href);
-// console.log(link.getAttribute('href'));
+// console.log(logo.designer); // doesn't work because it's not a standard property of pictures
+// but we can do this instead:
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
 
-// // Data attributes
-// console.log(logo.dataset.versionNumber); //Camelcase here even if HTML is with dashes
+console.log(logo.src); // absolute URL
+console.log(logo.getAttribute('src')); // URL in the html folder
 
-// // classes
-// logo.classList.add('c', 'j');
-// logo.classList.remove('c', 'j');
-// logo.classList.toggle('c');
-// logo.classList.contains('c');
+const link = document.querySelector('.twitter-link');
+console.log(link.href);
+console.log(link.getAttribute('href'));
 
-// // Don't use!! because
-// // logo.className = 'jonas'
+// Data attributes
+console.log(logo.dataset.versionNumber); //Camelcase here even if HTML is with dashes
 
-// */
+// classes
+logo.classList.add('c', 'j');
+logo.classList.remove('c', 'j');
+logo.classList.toggle('c');
+logo.classList.contains('c');
 
-// // Smooth scrolling:
-// const btnScrollTo = document.querySelector('.btn--scroll-to');
-// const section1 = document.querySelector('#section--1');
+// Don't use!! because
+// logo.className = 'jonas'
 
-// btnScrollTo.addEventListener('click', function (e) {
-//   const s1cords = section1.getBoundingClientRect(); // shows us the coordinates of the element
-//   // console.log(s1cords);
-//   // console.log(e.target.getBoundingClientRect()); // shows us the coordinates of the btnScrollTo Element relatviv -> changes when we scroll
-//   // console.log('Currents scroll (X/Y)', window.scrollX, window.scrollY); // -> Currents scroll (X/Y) 0 603
-//   // console.log(
-//   //   'height/width viewport',
-//   //   document.documentElement.clientHeight,
-//   //   document.documentElement.clientWidth
-//   // ); // -> height/width viewport 906 886
+*/
+/* Smooth scrolling:
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
-//   // Scorlling
-//   // window.scrollTo(s1cords.left, s1cords.top + window.scrollY); // top is relativ to the viewpoint not the page
+btnScrollTo.addEventListener('click', function (e) {
+  const s1cords = section1.getBoundingClientRect(); // shows us the coordinates of the element
+  // console.log(s1cords);
+  // console.log(e.target.getBoundingClientRect()); // shows us the coordinates of the btnScrollTo Element relatviv -> changes when we scroll
+  // console.log('Currents scroll (X/Y)', window.scrollX, window.scrollY); // -> Currents scroll (X/Y) 0 603
+  // console.log(
+  //   'height/width viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // ); // -> height/width viewport 906 886
 
-//   // window.scrollTo({
-//   //   left: s1cords.left,
-//   //   top: s1cords.top + window.scrollY,
-//   //   behavior: 'smooth',
-//   // });
+  // Scorlling
+  // window.scrollTo(s1cords.left, s1cords.top + window.scrollY); // top is relativ to the viewpoint not the page
 
-//   section1.scrollIntoView({ behavior: 'smooth' });
-// });
+  // window.scrollTo({
+  //   left: s1cords.left,
+  //   top: s1cords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
 
-// // Types of Events and Event Handlers
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
 
-// const h1 = document.querySelector('h1');
+// Types of Events and Event Handlers
 
-// const alertH1 = function (e) {
-//   alert('addEventListener: Great! You are reading the heading :D');
+const h1 = document.querySelector('h1');
+
+const alertH1 = function (e) {
+  alert('addEventListener: Great! You are reading the heading :D');
+};
+
+h1.addEventListener('mouseenter', alertH1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+
+// h1.onmouseenter = function (e) { // a bit oldscool
+//   alert('onmouseenter: Great! You are reading the heading :D');
 // };
 
-// h1.addEventListener('mouseenter', alertH1);
+// rgb(255,255,255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
-// setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  console.log('LINK');
+  this.style.backgroundColor = randomColor(); //this in eventhandlers link to the element it is attached to (so the .nav--link in this case)
+  console.log('LINK', e.target, e.currentTarget); // e.target === the element the handler is attached to, e.currentTarget === this-Keyword
+  console.log(e.currentTarget === this); // -> true
 
-// // h1.onmouseenter = function (e) { // a bit oldscool
-// //   alert('onmouseenter: Great! You are reading the heading :D');
-// // };
+  // stop propagation
+  // e.stopPropagation();
+});
 
-// // rgb(255,255,255)
-// const randomInt = (min, max) =>
-//   Math.floor(Math.random() * (max - min + 1) + min);
-// const randomColor = () =>
-//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+});
 
-// document.querySelector('.nav__link').addEventListener('click', function (e) {
-//   console.log('LINK');
-//   this.style.backgroundColor = randomColor(); //this in eventhandlers link to the element it is attached to (so the .nav--link in this case)
-//   console.log('LINK', e.target, e.currentTarget); // e.target === the element the handler is attached to, e.currentTarget === this-Keyword
-//   console.log(e.currentTarget === this); // -> true
-
-//   // stop propagation
-//   // e.stopPropagation();
-// });
-
-// document.querySelector('.nav__links').addEventListener('click', function (e) {
-//   this.style.backgroundColor = randomColor();
-//   console.log('CONTAINER', e.target, e.currentTarget);
-// });
-
-// document.querySelector('.nav').addEventListener('click', function (e) {
-//   this.style.backgroundColor = randomColor();
-//   console.log('NAV', e.target, e.currentTarget);
-// });
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.target, e.currentTarget);
+}); */
 /* DOM Traversing
 
 const h1 = document.querySelector('h1');
