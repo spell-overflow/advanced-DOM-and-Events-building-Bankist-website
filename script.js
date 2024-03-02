@@ -236,11 +236,17 @@ let curSlide = 0;
 const maxSlide = slides.length;
 
 const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(0.4) translateX(-300px)';
+slider.style.transform = 'scale(0.4) translateX(-800px)';
 slider.style.overflow = 'visible';
 
 slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
 // 0%, 100%, 200%, 300% as the img positions
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${100} * (i-slide)}%)`)
+  );
+};
 
 // Next slide
 btnRight.addEventListener('click', function () {
@@ -253,7 +259,10 @@ btnRight.addEventListener('click', function () {
       (s, i) => (s.style.transform = `translateX(${100 * (i - curSlide)}%)`)
     );
   }
+
+  goToSlide(curSlide);
 });
+
 /* selecting, creating and deleting Elements
 
 // selecting elements
