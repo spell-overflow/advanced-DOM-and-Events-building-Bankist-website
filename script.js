@@ -87,7 +87,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   if (e.target.classList.contains('nav__link')) {
     e.preventDefault();
     const id = e.target.getAttribute('href');
-    console.log(id);
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
