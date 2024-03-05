@@ -500,3 +500,19 @@ console.log(h1.parentElement.children);
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
 */
+// Lifecycle DOM Events
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built!', e);
+}); // DOM content loaded is fired as soon as the html is parsed
+
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+// window.addEventListener('beforeunload', function (e) {
+//   // event when page is left
+//   e.preventDefault(); // some browsers need this to work
+//   console.log(e);
+//   e.returnValue = ''; // may look weird but for historical reasons
+// });
